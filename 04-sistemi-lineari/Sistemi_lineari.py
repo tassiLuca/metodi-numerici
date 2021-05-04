@@ -1,42 +1,93 @@
 # -*- coding: utf-8 -*-
 """
-File per la soluzione di sistemi Lineari
+04 - File per la soluzione di sistemi Lineari
 """
 import numpy as np
 
-def Lsolve(L,b):
-    """  
-    Risoluzione con procedura forward di Lx=b con L triangolare inferiore  
-     Input: L matrice triangolare inferiore
-            b termine noto
-    Output: x: soluzione del sistema lineare
-            flag=  0, se sono soddisfatti i test di applicabilità
-                   1, se non sono soddisfatti
-    """
-#test dimensione
-    m,n=L.shape
-    flag=0;
+def _solve_applicability(L, m, n):
+    '''
+    Funzione per check di applicabilità dei metodi di sostituzione in 
+    avanti e indietro per la risoluzione di sistemi lineari con matrice 
+    triangolare.
+    
+    Parametri
+    ----------
+    L :     Matrice triangolare inferiore.
+    m, n:   Numero di righe e colonne della matrice L.
+
+    Valori di ritorno.
+    -------
+    flag :  Booleano che è 0 se sono soddisfatti entrambi i test di 
+            applicabilità, 1 altrimenti.
+    '''
+    
+    # Test dimensione
     if n != m:
-        print('errore: matrice non quadrata')
-        flag=1
-        x=[]
-        return x, flag
+        print('Errore: matrice non quadrata.')
+        return 1
     
-     # Test singolarita'
+    # Test singolarità: è necessario che tutti gli elementi diagonali di L
+    # siano NON nulli (visto che il determinante di una matrice triangolare 
+    # si calcola come il prodotto degli elementi sulla diagonale).
+    # NON SI DOVREBBE FARE UN CONTROLLO CON EPS?
     if np.all(np.diag(L)) != True:
-         print('el. diag. nullo - matrice triangolare inferiore')
-         x=[]
-         flag=1
-         return x, flag
-    # Preallocazione vettore soluzione
-    x=np.zeros((n,1))
-    
-    for i in range(n):
-         s=np.dot(L[i,:i],x[:i]) #scalare=vettore riga * vettore colonna
-         x[i]=(b[i]-s)/L[i,i]
-      
+        print('Errore: Elemento diagonale nullo.') 
+        return 1
      
-    return x,flag
+def Lsolve(L,b): 
+    """  
+    Risoluzione con procedura forward di Lx=b con L triangolare inferiore.
+        
+    Parametri
+    ----------
+    L: Matrice triangolare inferiore.
+    b: Termine noto.
+
+    Valori di ritorno.
+    -------
+    flag :  Booleano che è 0 se sono soddisfatti i test di applicabilità.            
+    x :     Soluzione del sistema lineare.
+    """
+    
+    m, n = L.shape
+    if _solve_applicability(L, m, n) :
+        return [], 1
+     
+    # Preallocazione vettore soluzione
+    x = np.zeros((n, 1))
+    # N.B.: range(n) va da zero (se non specificato lo start) a n escluso.
+    for i in range(n):
+        # scalare = vettore riga * vettore colonna
+        s = np.dot(L[i,:i], x[:i]) # sommatoria
+        x[i] = (b[i] - s) / L[i,i]
+    return x, 0
+
+def Usolve(L, b):
+    """  
+    Risoluzione con procedura backward di Ux=b con U triangolare superiore.
+        
+    Parametri
+    ----------
+    U: Matrice triangolare superiore.
+    b: Termine noto.
+
+    Valori di ritorno.
+    -------
+    flag :  Booleano che è 0 se sono soddisfatti i test di applicabilità.            
+    x :     Soluzione del sistema lineare.
+    """
+    m, n = L.shape
+    if _solve_applicability(L, m, n) :
+        return [], 1
+     
+    # Preallocazione vettore soluzione
+    x = np.zeros((n, 1))
+    # N.B.: range(n) va da n-1 a 0.
+    for i in range(n - 1, -1, -1):
+        # scalare = vettore riga * vettore colonna
+        s = np.dot(L[i, i+1:n], x[i+1:n]) # sommatoria
+        x[i] = (b[i] - s) / L[i,i]
+    return x, 0
 
 def LU_nopivot(A):
     """
