@@ -180,21 +180,6 @@ def LU_nopivotv(A):
 
 
 
-'''
-I moltiplicatori vengono memorizzati nel triangolo inferiore della matrice di partenza U: 
-nel triangolo inferiore di U, infatti, vi saranno coefficienti tutti nulli dato che il mio 
-scopo è ridurre U in triangolare superiore. 
-
-| u11, u12, ..., u1n |       | u11, u12, ..., u1n | 
-| u21, u22, ..., u2n |       | m21, u22, ..., u2n | 
-|  .    .         .  |       |  .    .         .  |
-|  .    .   .     .  | --->  |  .    .   .     .  | 
-|  .    .      .  .  |       |  .    .      .  .  |
-\ un1, un2, ..., unn |       \ mn1, un2, ..., unn |
-
-'''
-
-
 def LU_nopivotb(A):
     """  
     Fattorizzazione PA = LU senza pivoting **versione base**
@@ -221,25 +206,58 @@ def LU_nopivotb(A):
     # Inizializzo la matrice di permutazione con l'identità
     P = np.eye(n)
     U = A.copy()
-    # Fattorizzazione
+    # Fattorizzazione - ciclo esterno: sono necessari n - 1 passi per la fattorizzazione di U.
     for k in range(n-1):
-        # Test pivot:i minori principali della matrice A devono essere diversi da zero.
+        # Test pivot: i minori principali della matrice A devono essere diversi da zero.
         if U[k, k] == 0:
             print('elemento diagonale nullo')
             L, U, P, flag = [], [], [], 1 
             return P, L, U, flag
 
+        '''
+        Al primo passo, si annullano tutti i coefficienti della prima colonna dalla seconda riga fino all'n-esima. 
+        Al secondo tutti i coefficienti della seconda colonna dalla terza riga fino all'n-esima.
+        ...
+        Al passo k tutti i coefficienti della k-esima colonna dalla (k+1)-esima riga fino all'n-esima.
+        
+        => ciclo per i = k + 1 fino a n
+        
+        Per far ciò devo calcolare i corrispondenti moltiplicatori, che memorizzo direttamente nella colonna k-esima
+        sotto l'elemento diagonale k+1. Questo lo posso far in virtù del fatto che tutti i coefficienti del triangolo
+        inferiore diventeranno nulli e che l'elemento u(i,j) del passo (k+1)-esimo è ottenuto a partire da
+        u(i,j) - m(i,k) * u(k,j) del passo k-esimo.
+        
+                                                       Passo k = 1:    
+                                                 calcolo moltiplicatori
+                                                 
+        | u(1,1)  u(1,2)  ...  u(1,n) |     | u(1,1)  u(1,2)  ...  u(1,n) |       
+        | u(2,1)  u(2,2)  ...  u(2,n) |     | m(2,1)  u(2,2)  ...  u(2,n) |      
+        |   .       .      .     .    |     |   .        .     .     .    |      
+        |   .       .      .     .    | --> |   .        .     .     .    | -->  
+        |   .       .      .     .    |     |   .        .     .     .    |      
+        | u(n,1)  u(n,2)  ...  u(n,n) |     | m(n,1)  u(n,2)  ...  u(n,n) |     
+        
+                                                             Passo k = 2 ottenuto con
+                                                       u(i,j) - m(i,k) * u(k,j) del passo k = 1, 
+                                                            sapendo che m(i,k) = u(i,k)       
+                                                        
+                                            | u(1,1)          u(1,2)         ...          u(1,n)        |
+                                            | m(2,1)   u(2,2)-u(2,1)*u(1,2)  ...   u(1,n)-u(2,1)*u(1,n) |  
+                                            |   .               .             .             .           |   
+                                        --> |   .               .             .             .           |
+                                            |   .               .             .             .           | 
+                                            | m(n,1)  u(n,2)-u(n,1)*u(n-1,2) ..., u(n,n)-u(n,1)*u(n-1,n)|
 
-
-
-
-        # Eliminazione gaussiana
+        Alla fine dell'algoritmo: U è matrice in cui, nel triangolo inferiore vi sono i coefficienti moltiplicativi.
+        L è quindi ottenuta aggiungendo alla matrice identità la parte triangolare inferiore di U.
+        U è invece ottenuta estraendo la sua parte triangolare inferiore più la diagonale.
+        '''
         for i in range(k+1, n):
+            # Calcolo il moltiplicatore.
             U[i,k] = U[i,k] / U[k,k] 
-            for j in range(k+1,n):                                 # Memorizza i moltiplicatori      
+            for j in range(k+1,n):                                       
                 U[i,j] = U[i,j] - U[i,k] * U[k,j]  # Eliminazione gaussiana sulla matrice
      
-  
-    L=np.tril(U,-1)+np.eye(n)  # Estrae i moltiplicatori 
-    U=np.triu(U)           # Estrae la parte triangolare superiore + diagonale
-    return P,L,U,flag
+    L = np.tril(U,-1) + np.eye(n)   # Estrae i moltiplicatori
+    U = np.triu(U)                  # Estrae la parte triangolare superiore + diagonale
+    return P, L, U, flag
