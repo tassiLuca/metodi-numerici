@@ -92,14 +92,13 @@ def Usolve(U, b):
         # scalare = vettore riga * vettore colonna
         s = np.dot(U[i, i+1:n], x[i+1:n]) # sommatoria
         x[i] = (b[i] - s) / U[i,i]
-        print(x[i])
     return x, 0
 
 def LUsolve(L,U,P,b):
      """
      Risoluzione a partire da PA = LU assegnata
      
-     Dato un sistema lineare Ax = b con A matrice dei coefficienti e b vettore colonna dei termini noti.
+     Dato un sistema lineare Ax = b, con A matrice dei coefficienti e b vettore colonna dei termini noti.
      Il sistema è equivalente al sistema PAx = Pb con P matrice di permutazione. 
      Scopo della fattorizzazione: trovare due matrici L triangolare inferiore e U triangolare superiore 
      t.c. PA = LU. 
@@ -160,7 +159,7 @@ def LU_nopivotb(A):
             return P, L, U, flag
 
         '''
-        Al primo passo, si annullano tutti i coefficienti della prima colonna dalla seconda riga fino all'n-esima. 
+        Al primo passo si annullano tutti i coefficienti della prima colonna dalla seconda riga fino all'n-esima. 
         Al secondo tutti i coefficienti della seconda colonna dalla terza riga fino all'n-esima.
         ...
         Al passo k tutti i coefficienti della k-esima colonna dalla (k+1)-esima riga fino all'n-esima.
@@ -193,9 +192,10 @@ def LU_nopivotb(A):
                                             |   .               .             .             .           | 
                                             | m(n,1)  u(n,2)-u(n,1)*u(n-1,2) ...  u(n,n)-u(n,1)*u(n-1,n)|
 
-        Alla fine dell'algoritmo: U è matrice in cui, nel triangolo inferiore vi sono i coefficienti moltiplicativi.
-        L è quindi ottenuta aggiungendo alla matrice identità la parte triangolare inferiore di U.
-        U è invece ottenuta estraendo la sua parte triangolare inferiore più la diagonale.
+        Alla fine dell'algoritmo: 
+        - Nel triangolo inferiore di U vi sono i coefficienti moltiplicativi.
+        - L è quindi ottenuta aggiungendo alla matrice identità la parte triangolare inferiore di U.
+        - U è invece ottenuta estraendo la sua parte triangolare inferiore più la diagonale.
         '''
         for i in range(k+1, n):
             U[i,k] = U[i,k] / U[k,k]               # Calcolo il moltiplicatore.
