@@ -40,7 +40,7 @@ def _solve_applicability(L, m, n):
         
 def Lsolve(L,b): 
     """  
-    Risoluzione con procedura forward di Lx=b con L triangolare inferiore.
+    Risoluzione con procedura forward di Lx = b con L triangolare inferiore.
         
     Parametri
     ----------
@@ -69,7 +69,7 @@ def Lsolve(L,b):
 
 def Usolve(U, b):
     """  
-    Risoluzione con procedura backward di Ux=b con U triangolare superiore.
+    Risoluzione con procedura backward di Ux = b con U triangolare superiore.
         
     Parametri
     ----------
@@ -98,6 +98,19 @@ def Usolve(U, b):
 def LUsolve(L,U,P,b):
      """
      Risoluzione a partire da PA = LU assegnata
+     
+     Dato un sistema lineare Ax = b con A matrice dei coefficienti e b vettore colonna dei termini noti.
+     Il sistema è equivalente al sistema PAx = Pb con P matrice di permutazione. 
+     Scopo della fattorizzazione: trovare due matrici L triangolare inferiore e U triangolare superiore 
+     t.c. PA = LU. 
+     
+     PAx = Pb <=> P(LU)x = Pb. Chiamo Ux = y. 
+     I)  Risolvo il sistema lineare PLy = Pb, determinando y con il metodo di sostituzione in avanti (dato 
+         che L è triangolare inferiore). Nota: la matrice di permutazione P opere delle opportune permutazioni 
+         invarianti di riga al sistema lineare.
+     Una volta determinato y:
+     II) Risolvo il sistema lineare Ux = y, determinando x con il metodo di sostituzione all'indietro (dato 
+         che U è triangolare superiore).                                                 
      """
      Pb = np.dot(P,b)
      y, flag = Lsolve(L, Pb)
