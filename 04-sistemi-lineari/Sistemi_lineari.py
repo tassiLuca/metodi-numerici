@@ -284,8 +284,17 @@ def LU_nopivot(A):
     return P, L, U, flag
 
 
-def swapRows(A,k,p):
-    A[[k,p],:] = A[[p,k],:]
+def swapRows(A,k,r):
+    '''
+    Scambia le righe k e r della matrice A data in input.
+
+    Parametri
+    ----------
+    A: Matrice dei coefficienti.
+    k, r: Righe della matrice dei coefficienti che si vogliono scambiare.
+    '''
+    
+    A[[k,r],:] = A[[r,k],:]
 
 def LU_pivot(A):
     """  
