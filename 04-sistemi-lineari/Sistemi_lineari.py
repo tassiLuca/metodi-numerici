@@ -4,10 +4,9 @@
 """
 import numpy as np
 
-# ------------------------------------------------------------------------------
-# Metodi di sostituzione per la risoluzione di sistemi lineari con matrice 
-# dei coefficienti triangolare.
-# ------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------------
+# Metodi di sostituzione per la risoluzione di sistemi lineari con matrice dei coefficienti triangolare.
+# -------------------------------------------------------------------------------------------------------
 
 def _solve_applicability(L, m, n):
     '''
@@ -38,6 +37,7 @@ def _solve_applicability(L, m, n):
         print('Errore: Elemento diagonale nullo.') 
         return 1
      
+        
 def Lsolve(L,b): 
     """  
     Risoluzione con procedura forward di Lx=b con L triangolare inferiore.
@@ -66,6 +66,7 @@ def Lsolve(L,b):
         x[i] = (b[i] - s) / L[i,i]
     return x, 0
 
+
 def Usolve(U, b):
     """  
     Risoluzione con procedura backward di Ux=b con U triangolare superiore.
@@ -91,94 +92,25 @@ def Usolve(U, b):
         # scalare = vettore riga * vettore colonna
         s = np.dot(U[i, i+1:n], x[i+1:n]) # sommatoria
         x[i] = (b[i] - s) / U[i,i]
+        print(x[i])
     return x, 0
 
-# ------------------------------------------------------------------------------
+def LUsolve(L,U,P,b):
+     """
+     Risoluzione a partire da PA = LU assegnata
+     """
+     Pb = np.dot(P,b)
+     y, flag = Lsolve(L, Pb)
+     if flag == 0:
+         x, flag = Usolve(U, y)
+     else:
+        return [],flag
+
+     return x,flag
+
+# -------------------------------------------------------------------------------------------------------
 # Metodo di Gauss (o eliminazione gaussiana).
-# ------------------------------------------------------------------------------
-
-def LU_nopivot(A):
-    """  
-    Fattorizzazione PA = LU senza pivoting **versione vettorizzata**
-        
-    Parametri
-    ----------
-    A: Matrice dei coefficienti.
-
-    Valori di ritorno.
-    -------
-    L: Matrice triangolare inferiore
-    U: Matrice triangolare superiore
-    P: Matrice identità (senza pivoting non vi è alcuna matrice di permutazione)
-    """
-
-    # Test dimensione
-    m, n = A.shape
-   
-    flag = 0;
-    if n != m:
-      print("Matrice non quadrata")
-      L, U, P, flag = [], [], [], 1 
-      return P, L, U, flag
-  
-    P = np.eye(n);
-    U=A.copy();
- # Fattorizzazione
-    for k in range(n-1):
-       #Test pivot 
-          if U[k,k]==0:
-            print('elemento diagonale nullo')
-            L,U,P,flag=[],[],[],1 
-            return P,L,U,flag
-
-  #     Eliminazione gaussiana
-          U[k+1:n,k]=U[k+1:n,k]/U[k,k]                                   # Memorizza i moltiplicatori      
-          U[k+1:n,k+1:n]=U[k+1:n,k+1:n]-np.outer(U[k+1:n,k],U[k,k+1:n])  # Eliminazione gaussiana sulla matrice
-     
-  
-    L=np.tril(U,-1)+np.eye(n)  # Estrae i moltiplicatori 
-    U=np.triu(U)           # Estrae la parte triangolare superiore + diagonale
-    return P,L,U,flag
-
-def LU_nopivotv(A):
-    """
-    % Fattorizzazione PA=LU senza pivot   versione vettorizzata intermedia
-    In output:
-    L matrice triangolare inferiore
-    U matrice triangolare superiore
-    P matrice identità
-    tali che  LU=PA=A
-    """
-    # Test dimensione
-    m,n=A.shape
-   
-    flag=0;
-    if n!=m:
-      print("Matrice non quadrata")
-      L,U,P,flag=[],[],[],1 
-      return P,L,U,flag
-  
-    P=np.eye(n);
-    U=A.copy();
- # Fattorizzazione
-    for k in range(n-1):
-       #Test pivot 
-          if U[k,k]==0:
-            print('elemento diagonale nullo')
-            L,U,P,flag=[],[],[],1 
-            return P,L,U,flag
-
-  #     Eliminazione gaussiana
-          for i in range(k+1,n):
-             U[i,k]=U[i,k]/U[k,k]                                   # Memorizza i moltiplicatori      
-             U[i,k+1:n]=U[i,k+1:n]-U[i,k]*U[k,k+1:n]  # Eliminazione gaussiana sulla matrice
-     
-  
-    L=np.tril(U,-1)+np.eye(n)  # Estrae i moltiplicatori 
-    U=np.triu(U)           # Estrae la parte triangolare superiore + diagonale
-    return P,L,U,flag
-
-
+# -------------------------------------------------------------------------------------------------------
 
 def LU_nopivotb(A):
     """  
@@ -210,7 +142,7 @@ def LU_nopivotb(A):
     for k in range(n-1):
         # Test pivot: i minori principali della matrice A devono essere diversi da zero.
         if U[k, k] == 0:
-            print('elemento diagonale nullo')
+            print('Elemento diagonale nullo')
             L, U, P, flag = [], [], [], 1 
             return P, L, U, flag
 
@@ -237,27 +169,152 @@ def LU_nopivotb(A):
         |   .       .      .     .    |     |   .        .     .     .    |      
         | u(n,1)  u(n,2)  ...  u(n,n) |     | m(n,1)  u(n,2)  ...  u(n,n) |     
         
-                                                             Passo k = 2 ottenuto con
+                                                               Passo k = 2 ottenuto con
                                                        u(i,j) - m(i,k) * u(k,j) del passo k = 1, 
-                                                            sapendo che m(i,k) = u(i,k)       
+                                                              sapendo che m(i,k) = u(i,k)       
                                                         
                                             | u(1,1)          u(1,2)         ...          u(1,n)        |
                                             | m(2,1)   u(2,2)-u(2,1)*u(1,2)  ...   u(1,n)-u(2,1)*u(1,n) |  
                                             |   .               .             .             .           |   
                                         --> |   .               .             .             .           |
                                             |   .               .             .             .           | 
-                                            | m(n,1)  u(n,2)-u(n,1)*u(n-1,2) ..., u(n,n)-u(n,1)*u(n-1,n)|
+                                            | m(n,1)  u(n,2)-u(n,1)*u(n-1,2) ...  u(n,n)-u(n,1)*u(n-1,n)|
 
         Alla fine dell'algoritmo: U è matrice in cui, nel triangolo inferiore vi sono i coefficienti moltiplicativi.
         L è quindi ottenuta aggiungendo alla matrice identità la parte triangolare inferiore di U.
         U è invece ottenuta estraendo la sua parte triangolare inferiore più la diagonale.
         '''
         for i in range(k+1, n):
-            # Calcolo il moltiplicatore.
-            U[i,k] = U[i,k] / U[k,k] 
+            U[i,k] = U[i,k] / U[k,k]               # Calcolo il moltiplicatore.
             for j in range(k+1,n):                                       
                 U[i,j] = U[i,j] - U[i,k] * U[k,j]  # Eliminazione gaussiana sulla matrice
      
     L = np.tril(U,-1) + np.eye(n)   # Estrae i moltiplicatori
     U = np.triu(U)                  # Estrae la parte triangolare superiore + diagonale
+    return P, L, U, flag
+
+
+def LU_nopivotv(A):
+    """  
+    Fattorizzazione PA = LU senza pivoting **versione intermedia**
+        
+    Parametri
+    ----------
+    A: Matrice dei coefficienti.
+
+    Valori di ritorno.
+    -------
+    L: Matrice triangolare inferiore
+    U: Matrice triangolare superiore
+    P: Matrice identità (senza pivoting non vi è alcuna matrice di permutazione)
+    """
+    m, n = A.shape
+   
+    flag = 0;
+    if n != m:
+        print("Matrice non quadrata")
+        L, U, P, flag = [], [], [], 1 
+        return P, L, U, flag
+  
+    P = np.eye(n)
+    U = A.copy()
+    for k in range(n-1):
+        if U[k, k] == 0:
+            print('Elemento diagonale nullo')
+            L, U, P, flag = [], [], [], 1 
+            return P, L, U, flag
+
+        for i in range(k+1, n):
+            U[i, k] = U[i, k] / U[k, k]                              
+            U[i, k+1:n] = U[i, k+1:n] - U[i, k] * U[k, k+1:n]  
+     
+    L = np.tril(U,-1) + np.eye(n)
+    U = np.triu(U)                
+    return P, L, U, flag
+
+
+def LU_nopivot(A):
+    """  
+    Fattorizzazione PA = LU senza pivoting **versione vettorizzata**
+        
+    Parametri
+    ----------
+    A: Matrice dei coefficienti.
+
+    Valori di ritorno.
+    -------
+    L: Matrice triangolare inferiore
+    U: Matrice triangolare superiore
+    P: Matrice identità (senza pivoting non vi è alcuna matrice di permutazione)
+    """
+    m, n = A.shape
+   
+    flag = 0;
+    if n != m:
+        print("Matrice non quadrata")
+        L, U, P, flag = [], [], [], 1 
+        return P, L, U, flag
+  
+    P = np.eye(n);
+    U = A.copy();
+    for k in range(n-1):
+        if U[k,k] == 0:
+            print('Elemento diagonale nullo')
+            L, U, P, flag = [], [], [], 1 
+            return P, L, U, flag
+
+        U[k+1:n, k] = U[k+1:n, k] / U[k, k]                                   
+        U[k+1:n, k+1:n] = U[k+1:n, k+1:n] - np.outer(U[k+1:n, k], U[k, k+1:n]) 
+  
+    L = np.tril(U,-1) + np.eye(n)  
+    U = np.triu(U)           
+    return P, L, U, flag
+
+
+def swapRows(A,k,p):
+    A[[k,p],:] = A[[p,k],:]
+
+def LU_pivot(A):
+    """  
+    Fattorizzazione PA = LU con pivoting parziale
+        
+    Parametri
+    ----------
+    A: Matrice dei coefficienti.
+
+    Valori di ritorno.
+    -------
+    L: Matrice triangolare inferiore
+    U: Matrice triangolare superiore
+    P: Matrice identità (senza pivoting non vi è alcuna matrice di permutazione)
+    """
+    m, n = A.shape
+   
+    flag = 0;
+    if n != m:
+        print("Matrice non quadrata")
+        L, U, P, flag = [], [], [], 1 
+        return P, L, U, flag
+  
+    P = np.eye(n);
+    U = A.copy();
+    for k in range(n-1):     
+        '''
+        Nella colonna k-esima della matrice ricerco l'indice di riga r >= k in cui si trova
+        l'elemento di modulo massimo e si scambia la riga k-esima con la riga r-esima, applicando
+        il medesimo scambio anche alla matrice di permutazione P.
+        
+        NOTA: argmax ritorna l'indice del massimo valore presente. Siccome gli abbiamo dato in ingresso solo 
+        il sottovettore che va dalla riga k-esima alla riga n-esima bisogna aggiungergli l'offset di k.
+        '''
+        r = np.argmax(abs(U[k:n,k])) + k
+        if r != k:
+            swapRows(P,k,r)
+            swapRows(U,k,r)
+
+        U[k+1:n, k] = U[k+1:n, k] / U[k, k]                                   
+        U[k+1:n, k+1:n] = U[k+1:n, k+1:n] - np.outer(U[k+1:n, k], U[k, k+1:n]) 
+  
+    L = np.tril(U,-1) + np.eye(n)  
+    U = np.triu(U)           
     return P, L, U, flag
