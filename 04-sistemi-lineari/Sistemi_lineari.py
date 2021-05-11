@@ -118,7 +118,7 @@ def LUsolve(L,U,P,b):
      else:
         return [],flag
 
-     return x,flag
+     return x, flag
 
 # -------------------------------------------------------------------------------------------------------
 # Metodo di Gauss (o eliminazione gaussiana).
