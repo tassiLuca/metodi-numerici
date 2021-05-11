@@ -1,13 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Thu May  6 18:11:06 2021
-
-@author: lucatassi
-"""
-
 '''
-Esercizio 1
+04 - Esercizio 1
 -----------
 
 Al variare di n = 100, ..., 200 costruire la matrice:
