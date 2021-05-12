@@ -44,15 +44,6 @@ def solve_nsis(A, B, flagPivot):
     X :     Matrici con le soluzioni del sistema lineare.
     flag :  Booleano che è 0 se sono soddisfatti i test di applicabilità.            
     """
-    
-    '''
-        A x_i = b_i   P A = L U
-        P A x_i = P b_i
-        Detto y U x_i 
-        
-        I  --> L y = P b_i
-        II --> U x_i = y
-    '''
     m, n = A.shape
     flag = 0
     if m != n :
