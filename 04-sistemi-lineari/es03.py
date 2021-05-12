@@ -27,7 +27,7 @@ import Sistemi_lineari as sl
 import numpy as np
 import scipy.linalg as spl
 
-def solve_nsis(A, B):
+def solve_nsis(A, B, flagPivot):
     """  
     Risoluzione degli n sistemi lineari A x_i = b_i con i = 0, ..., n (in cui il vettore dei termini
     noti è ottenuto prendendo l'i-esima colonna della matrice B).
@@ -36,6 +36,8 @@ def solve_nsis(A, B):
     ----------
     A: matrice dei coefficienti.
     B: matrice dei termini noti.
+    flagPivot: booleano che permette di selezionare il tipo di fattorizzazione di A. Se è true viene 
+               fattorizzata con pivoting, altrimenti no.
 
     Valori di ritorno.
     -------
@@ -61,7 +63,7 @@ def solve_nsis(A, B):
     # La matrice in input A è la sempre la stessa. 
     # La fattorizzazione di A la calcoliamo quindi una sola volta.
     X = np.zeros((m, n))
-    P, L, U, flag = sl.LU_pivot(A)
+    P, L, U, flag = sl.LU_pivot(A) if flagPivot else sl.LU_nopivot(A)
     if flag == 0:
         for i in range(n):
             x, flag = sl.LUsolve(L, U, P, B[:, i])
@@ -88,9 +90,12 @@ A = matrices.get(choice)
 m, n = A.shape
 B = np.eye(m)
 
-X = solve_nsis(A, B)
-print(X)
+# Per la seconda matrice il metodo senza pivoting fallisce, a causa di un elemento pivotale nullo!
+X, flag = solve_nsis(A, B, False)
+print("Inversa risolvendo n sistemi lineari SENZA PIVOT: \n", X)
+
+X, flag = solve_nsis(A, B, True)
+print("Inversa risolvendo n sistemi lineari CON PIVOT: \n", X)
 
 Xpy = spl.inv(A)
-
-print(Xpy)   
+print("Inversa usando scipy.linalg \n", Xpy)   
