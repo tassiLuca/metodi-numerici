@@ -58,7 +58,7 @@ def solve_nsis(A, B, flagPivot):
     if flag == 0:
         for i in range(n):
             x, flag = sl.LUsolve(L, U, P, B[:, i])
-            # x è a questo punto un array di 3 righe e 1 colonne. Il metodo squeeze permette di
+            # x è a questo punto un array di 3 righe e 1 colonna. Il metodo squeeze permette di
             # convertirlo in un array unidimensionale (si potrebbe ottenere anche con un reshape).
             X[:, i] = x.squeeze(1)
     else :
