@@ -18,7 +18,7 @@ def _solve_applicability(L, m, n):
     L :     Matrice triangolare inferiore.
     m, n:   Numero di righe e colonne della matrice L.
 
-    Valori di ritorno.
+    Valori di ritorno
     -------
     flag :  Booleano che è 0 se sono soddisfatti entrambi i test di 
             applicabilità, 1 altrimenti.
@@ -47,7 +47,7 @@ def Lsolve(L,b):
     L: Matrice triangolare inferiore.
     b: Termine noto.
 
-    Valori di ritorno.
+    Valori di ritorno
     -------
     flag :  Booleano che è 0 se sono soddisfatti i test di applicabilità.            
     x :     Soluzione del sistema lineare.
@@ -76,7 +76,7 @@ def Usolve(U, b):
     U: Matrice triangolare superiore.
     b: Termine noto.
 
-    Valori di ritorno.
+    Valori di ritorno
     -------
     flag :  Booleano che è 0 se sono soddisfatti i test di applicabilità.            
     x :     Soluzione del sistema lineare.
@@ -95,30 +95,44 @@ def Usolve(U, b):
     return x, 0
 
 def LUsolve(L,U,P,b):
-     """
-     Risoluzione a partire da PA = LU assegnata
-     
-     Dato un sistema lineare Ax = b, con A matrice dei coefficienti e b vettore colonna dei termini noti.
-     Il sistema è equivalente al sistema PAx = Pb con P matrice di permutazione. 
-     Scopo della fattorizzazione: trovare due matrici L triangolare inferiore e U triangolare superiore 
-     t.c. PA = LU. 
-     
-     PAx = Pb <=> P(LU)x = Pb. Chiamo Ux = y. 
-     I)  Risolvo il sistema lineare PLy = Pb, determinando y con il metodo di sostituzione in avanti (dato 
-         che L è triangolare inferiore). Nota: la matrice di permutazione P opere delle opportune permutazioni 
-         invarianti di riga al sistema lineare.
-     Una volta determinato y:
-     II) Risolvo il sistema lineare Ux = y, determinando x con il metodo di sostituzione all'indietro (dato 
-         che U è triangolare superiore).                                                 
-     """
-     Pb = np.dot(P,b)
-     y, flag = Lsolve(L, Pb)
-     if flag == 0:
-         x, flag = Usolve(U, y)
-     else:
-        return [],flag
+    """
+    Risoluzione a partire da PA = LU assegnata
 
-     return x, flag
+    Parametri
+    ----------
+    L: Matrice triangolare inferiore.
+    U: Matrice triangolare superiore.
+    P: Matrice di permutazione.
+    b: Termine noto.
+
+    Valori di ritorno
+    -------
+    flag :  Booleano che è 0 se sono soddisfatti i test di applicabilità.            
+    x :     Soluzione del sistema lineare.
+    
+    Note
+    -------
+    Dato un sistema lineare Ax = b, con A matrice dei coefficienti e b vettore colonna dei termini noti.
+    Il sistema è equivalente al sistema PAx = Pb con P matrice di permutazione. 
+    Scopo della fattorizzazione: trovare due matrici L triangolare inferiore e U triangolare superiore 
+    t.c. PA = LU. 
+     
+    PAx = Pb <=> P(LU)x = Pb. Chiamo Ux = y. 
+    I)  Risolvo il sistema lineare PLy = Pb, determinando y con il metodo di sostituzione in avanti (dato 
+        che L è triangolare inferiore). Nota: la matrice di permutazione P opere delle opportune permutazioni 
+        invarianti di riga al sistema lineare.
+    Una volta determinato y:
+    II) Risolvo il sistema lineare Ux = y, determinando x con il metodo di sostituzione all'indietro (dato 
+        che U è triangolare superiore).                                                 
+    """
+    Pb = np.dot(P,b)
+    y, flag = Lsolve(L, Pb)
+    if flag == 0:
+        x, flag = Usolve(U, y)
+    else:
+       return [],flag
+
+    return x, flag
 
 # -------------------------------------------------------------------------------------------------------
 # Metodo di Gauss (o eliminazione gaussiana).
@@ -132,7 +146,7 @@ def LU_nopivotb(A):
     ----------
     A: Matrice dei coefficienti.
 
-    Valori di ritorno.
+    Valori di ritorno
     -------
     L: Matrice triangolare inferiore
     U: Matrice triangolare superiore
@@ -215,7 +229,7 @@ def LU_nopivotv(A):
     ----------
     A: Matrice dei coefficienti.
 
-    Valori di ritorno.
+    Valori di ritorno
     -------
     L: Matrice triangolare inferiore
     U: Matrice triangolare superiore
@@ -254,7 +268,7 @@ def LU_nopivot(A):
     ----------
     A: Matrice dei coefficienti.
 
-    Valori di ritorno.
+    Valori di ritorno
     -------
     L: Matrice triangolare inferiore
     U: Matrice triangolare superiore
@@ -304,7 +318,7 @@ def LU_pivot(A):
     ----------
     A: Matrice dei coefficienti.
 
-    Valori di ritorno.
+    Valori di ritorno
     -------
     L: Matrice triangolare inferiore
     U: Matrice triangolare superiore
