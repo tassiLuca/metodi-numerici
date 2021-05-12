@@ -63,7 +63,7 @@ def solve_nsis(A, B, flagPivot):
             X[:, i] = x.squeeze(1)
     else :
         flag = 1
-        print("Errore: fattorizzazione")
+        print("Errore fattorizzazione")
         return [], flag
     
     return X, flag
