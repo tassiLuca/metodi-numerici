@@ -8,6 +8,9 @@ in modo che risolti x = [1, 1, ..., 1]^T. Si risolva tale sistema con il metodo 
 parziale e il metodo di fattorizzazione QR. Calcolare gli errori relativi da cui sono affette le soluzioni calcolate
 con i due metodi e produrre, al variare di n, un grafico in scala semilogaritmica degli errori relativi calcolati.
 Che cosa si osserva?
+
+NOTE: Il vantaggio della fattorizzazione QR è una maggiore stabilità rispetto alla fattorizzazione LU, senza dover
+      ricorrere ad una strategia di pivoting. Lo svantaggio è il "raddoppio" del costo computazionale (slide 62 teoria).
 """
 import numpy as np
 import numpy.linalg as npl
@@ -61,6 +64,12 @@ for n in range(start, stop, step):
     err_rel_pivot.append(err_pivot)
     
     # Fattorizzazione QR
+    '''
+    A = QR <=> Ax = b <=> QRx = b. 
+    Detto y = Rx si calcola:
+        I)  Qy = b ----> siccome Q è ortogonale: l'inversa di Q coincide con la trasposta e quindi y = Q.T b.
+        II) Rx = y ----> siccome R è triangola superiore si risolve mediante sostituzione all'indietro.
+    '''
     Q, R = spl.qr(A)
     y = np.dot(Q.T, b)
     x_qr, flag = sl.Usolve(R, y)
