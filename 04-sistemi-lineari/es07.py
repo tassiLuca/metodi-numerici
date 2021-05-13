@@ -20,7 +20,7 @@ import Sistemi_lineari as sl
 
 def Hankel(n):
     '''
-    Costruisce la funzione di Hankel.
+    Costruisce la matrice di Hankel.
 
     Parametri
     ----------
@@ -30,14 +30,14 @@ def Hankel(n):
     -------
     H: matrice di Hankel di ordine n generata.
     '''
-    A = np.zeros((n, n), dtype = float)
+    H = np.zeros((n, n), dtype = float)
     for i in range(0, n) :
         for k in range(i + 1 - n, i + 1) :
             if (k > 0):
-                A[i, n - 1 + k - i] = 2.0 ** (k + 1)
+                H[i, n - 1 + k - i] = 2.0 ** (k + 1)
             else :
-                A[i, n - 1 + k - i] = 2.0 ** (1 / (2 - k - 1))
-    return A
+                H[i, n - 1 + k - i] = 2.0 ** (1 / (2 - k - 1))
+    return H
 
 indice_condizionamento = []
 err_rel_pivot = []
@@ -49,7 +49,7 @@ step = 6
 
 for n in range(start, stop, step):
     A = Hankel(n)
-    indice_condizionamento.append(npl.cond(A))
+    indice_condizionamento.append(npl.cond(A, 2))
     x_esatta = np.ones((n, 1))
     b = np.dot(A, x_esatta)
     
