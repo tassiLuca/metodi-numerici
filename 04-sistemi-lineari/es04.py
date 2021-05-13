@@ -12,7 +12,19 @@ dove ε > 0. Dopo aver osservato che quando ε = 0 tale sistema ha soluzione [2,
 senza far uso della strategia pivotale per valori di ε pari a 10^-k con k = 2 : 2 : 18. Confrontare i risultati
 ottenuti con le soluzioni trovate per i medesimi valori di ε quando viene applicata la strategia pivotale.
 
-NOTE: 
+NOTE: Se non faccio pivoting, calcolando il moltiplicatore m(2, 1) al primo passo è 1 / ε. Quando ε diventa molto 
+      piccolo il moltiplicatore "esplode", per cui la fattorizzazione senza pivoting NON è stabile. Infatti, dalla
+      teoria sappiamo che la stabilità della fattorizzazione LU è definita in termini degli elementi massimi in modulo
+      di L e U (si veda pg. 48 slides teoria).
+      
+            | ε  1 |           |  1   0 |
+        A = | 1  1 | ----> L = | 1/ε  1 | ----> l(2, 1) è molto grande se ε è molto piccolo!!
+      
+      Con la strategia del pivoting parziale, invece, operando opportuni scambi di righe si ha che gli elementi di L
+      sono sempre <= 1 (pg. 47 slides teoria) e ciò garantisce una maggiore stabilità della fattorizzazione:
+          
+            | ε  1 |             | 1  1 |           |  1   1 |
+        A = | 1  1 | ----> P A = | ε  1 | ----> L = | ε/1  1 |
 """
 
 import numpy as np
