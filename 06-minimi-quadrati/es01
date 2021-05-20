@@ -1,0 +1,10 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Esercizio 1
+-------------------
+
+Si implementi e si utilizzi la function QR per l'approssimazione ai minimi quadrati (metodo QRLS) delle date 
+configurazioni di dati al variare del grado n tra 1 e 3.
+"""
+
