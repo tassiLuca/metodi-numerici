@@ -13,6 +13,9 @@ Per i dati (x_i, y_i) riportati nei seguenti array:
 
 Quale tra le tre approssimazioni risulta migliore? 
 Confrontare i grafici e la norma euclidea al quadrato del vettore dei residui. 
+
+NOTE: Si nota che, all'aumentare del grado del polinomio n, la norma al 
+      quadrato del residuo diminuisce.
 """
 
 import numpy as np
