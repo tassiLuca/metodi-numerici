@@ -31,7 +31,7 @@ for n in range(1, 4):
     a = mq.QR(x, y, n)
     '''
     Calcolo il residuo: ||y - Ba||^2 dove B è la matrice di Vandermonde, y il vettore colonna 
-    contenente le ascisse dei punti dati e a è il vettore colonna incognito. 
+    contenente le ordinate dei punti dati e a è il vettore colonna incognito. 
     Dalla teoria (pg. 17) si ha che:
                    ||y - Ba||^2 = Σ(y_i - p_n(x_i))^2
     '''
