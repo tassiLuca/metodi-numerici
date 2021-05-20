@@ -26,7 +26,7 @@ def QR(x, y, n):
     """
     
     # in generale, per un polinomio di grado n vi sono n + 1 coefficienti
-    H = np.vander(x, n + 1)
+    H = np.vander(x, n + 1)     # Matrice di Vandermonde
     Q, R = spl.qr(H)
     y1 = np.dot(Q.T, y)
     a, flag = sl.Usolve(R[0:n+1, :], y1[0:n+1])
