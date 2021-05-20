@@ -26,10 +26,23 @@ y_val = []
 
 for n in range(1, 4):
     a = mq.QR(x, y, n)
+    '''
+    Calcolo il residuo: ||y - Ba||^2 dove B è la matrice di Vandermonde, y il vettore colonna 
+    contenente le ascisse dei punti dati e a è il vettore colonna incognito. 
+    Dalla teoria (pg. 17) si ha che:
+                   ||y - Ba||^2 = Σ(y_i - p_n(x_i))^2
+    '''
+    residuo = np.linalg.norm(y - np.polyval(a, x))**2
+    print("n = ", n, "--> Norma al quadrato del residuo =", residuo)
+    '''
+    Per graficare la curva valuto il polinomio nei 100 punti equidistanti compresi tra min(x) e max(x).
+    In particolare polyval ritorna, detta N la lunghezza di a:
+            p[i] = a[0]*x_val[i]**(N-1) + a[1]*x_val[i]**(N-2) + ... + a[N-2]*x_val[i] + a[N-1]
+    '''
     p = np.polyval(a, x_val)
     plt.plot(x_val, p)
 
-plt.plot(x, y, 'go')
-plt.legend(['Retta di regressione', 'Parabola', 'Cubica'])
+plt.plot(x, y, 'ro')
+plt.legend(['Retta di regressione', 'Parabola', 'Cubica', 'Dati'])
 plt.show()
     
