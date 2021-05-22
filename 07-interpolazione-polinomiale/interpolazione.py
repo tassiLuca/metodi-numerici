@@ -56,8 +56,7 @@ def plagrange(nodes, j):
     
 def lagrange_interp(nodes, nodes_values, points_values):
     """
-    Determina in un insieme di punti il valore del polinomio interpolante
-    ottenuto dalla formula di Lagrange.
+    Determina in un insieme di punti il valore del polinomio interpolante ottenuto dalla formula di Lagrange.
 
     Parametri
     ----------
@@ -72,10 +71,10 @@ def lagrange_interp(nodes, nodes_values, points_values):
     '''
     Si deve calcolare:       
             P_n(x_i) = \sum_{j=0}^{n} y_j * L_j(x_i)    i = 0, ..., m
-    Per farlo costruisco la matrice L delle funzioni base di Lagrange, cosituita da tante 
-    righe quanti sono gli n + 1 coefficienti e, fissata la riga k-esima, ho il polinomio k-esimo
-    valutato in tutti i punti dati. Il risultato sarà dato dal prodotto matriciale tra il vettore
-    contenente gli y_j (ovvero le ordinate dei nodi di interpolazione) e la matrice L:
+    Per farlo costruisco la matrice L delle funzioni base di Lagrange, cosituita da tante righe quanti sono gli n + 1 
+    coefficienti e, fissata la riga k-esima, ho il polinomio k-esimo valutato in tutti i punti dati. 
+    Il risultato sarà dato dal prodotto matriciale tra il vettore contenente gli y_j (ovvero le ordinate dei nodi di 
+    interpolazione) e la matrice L:
         
                            | L_0(x_0)  L_0(x_1)  ...  L_0(X_m) |   | y_0*L_0(x_0) + y_1*L_1(x_0) + ... + y_n*L_n(x_0) |
                            | L_1(x_0)  L_1(x_1)  ...  L_1(X_m) |   | y_0*L_0(x_1) + y_1*L_1(x_1) + ... + y_n*L_n(x_1) |
@@ -83,6 +82,9 @@ def lagrange_interp(nodes, nodes_values, points_values):
                            |    .          .      .       .    |   |                                                  |
                            |    .          .              .    |   |                                                  |
                            | L_n(x_0)  L_n(x_1)  ...  L_n(X_m) |   | y_0*L_0(x_m) + y_1*L_1(x_m) + ... + y_n*L_n(x_m) |
+                           
+    Qui: x_i ---> points_value
+         y_i ---> nodes_values
     '''
     n = nodes.size
     m = points_values.size
