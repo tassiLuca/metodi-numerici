@@ -6,6 +6,10 @@ Interpolazione polinomiale.
 
 import numpy as np
 
+'''
+N.B.  Si assume qui che le ascisse dei nodi siano tutte diverse (vedi slide 7)
+'''
+
 def plagrange(nodes, j):
     '''
     Restituisce i coefficienti del j-esimo polinomio di Lagrange associato ai punti del vettore nodes.
@@ -13,11 +17,12 @@ def plagrange(nodes, j):
     Parametri
     ----------
     nodes : i nodi dell'interpolazione
-        j : l'indice che definisce il polinomio fondamentale di Lagrange da valutare.
+    j : l'indice che definisce il polinomio fondamentale di Lagrange da valutare.
         
     Valori di ritorno
     -------
     p : vettore contente i coefficienti del j-esimo polinomio di Lagrange.
+    flag : ritorna 1 se sono occorsi degli errori.
 
     '''
     '''
@@ -50,9 +55,12 @@ def plagrange(nodes, j):
     # quelli in numerator, valutati nel nodo j-esimo escluso.
     denominator = np.polyval(numerator, nodes[j])
     
+    if denominator == 0:
+        return 0, 1
+    
     p = numerator / denominator
     
-    return p
+    return p, 0
     
 def lagrange_interp(nodes, nodes_values, points_values):
     """
@@ -90,7 +98,10 @@ def lagrange_interp(nodes, nodes_values, points_values):
     m = points_values.size
     L = np.zeros((n, m))
     for k in range(n):
-        p = plagrange(nodes, k)
+        p, flag = plagrange(nodes, k)
+        if flag == 0:
+            print("Something went wrong!")
+            return []
         L[k, :] = np.polyval(p, points_values)
         
     return np.dot(nodes_values, L)
