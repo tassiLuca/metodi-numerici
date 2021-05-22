@@ -99,7 +99,7 @@ def lagrange_interp(nodes, nodes_values, points_values):
     L = np.zeros((n, m))
     for k in range(n):
         p, flag = plagrange(nodes, k)
-        if flag == 0:
+        if flag == 1:
             print("Something went wrong!")
             return []
         L[k, :] = np.polyval(p, points_values)
