@@ -19,18 +19,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 import interpolazione as intrpl
 
-temperature = np.array([-55, -45, -35, -25, -15, -5, 5, 15, 25, 25, 45, 55, 65])
-latitude = np.array([3.7, 3.7, 3.52, 3.27, 3.2, 3.15, 3.15, 3.25, 3.47, 3.52, 3.65, 3.67, 3.52])
+latitude = np.array([-55, -45, -35, -25, -15, -5, 5, 15, 25, 35, 45, 55, 65])
+temperature = np.array([3.7, 3.7, 3.52, 3.27, 3.2, 3.15, 3.15, 3.25, 3.47, 3.52, 3.65, 3.67, 3.52])
+points_values = np.linspace(np.min(latitude), np.max(latitude), 200)
 
-points_values = np.linspace(np.min(temperature), np.max(temperature), 200)
-
-pol = intrpl.lagrange_interp(temperature, latitude, points_values)
+pol = intrpl.lagrange_interp(latitude, temperature, points_values)
 
 l1 = 42
 l2 = -42
-t1 = intrpl.lagrange_interp(temperature, latitude, np.array([l1])) 
-t2 = intrpl.lagrange_interp(temperature, latitude, np.array([l2])) 
+t1 = intrpl.lagrange_interp(latitude, temperature, np.array([l1])) 
+t2 = intrpl.lagrange_interp(latitude, temperature, np.array([l2])) 
 
-plt.plot(points_values, pol, '--', temperature, latitude, '*', l1, t1, 'og', l2, t2, 'og')
+plt.plot(points_values, pol, '--', latitude, temperature, '*', l1, t1, 'og', l2, t2, 'og')
 plt.legend(['Interpolante di Lagrange', 'Punti di interpolazione', 'Strima temperatura 42°', 'Strima temperatura -42°'])
 plt.show()
