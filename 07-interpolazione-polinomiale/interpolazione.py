@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Sat May 22 10:40:22 2021
-
-@author: lucatassi
+Interpolazione polinomiale.
 """
 
 import numpy as np
@@ -56,9 +54,42 @@ def plagrange(nodes, j):
     
     return p
     
-    
-    
-    
-    
-    
+def lagrange_interp(nodes, nodes_values, points_values):
+    """
+    Determina in un insieme di punti il valore del polinomio interpolante
+    ottenuto dalla formula di Lagrange.
+
+    Parametri
+    ----------
+    nodes         : vettore con i nodi dell'interpolazione
+    nodes_values  : vettore con i valori dei nodi
+    points_values : vettore con i punti in cui si vuole valutare il polinomio
+
+    Valori di ritorno
+    -------
+    Vettore contenente i valori assunti dal polinomio interpolante.
+    """
+    '''
+    Si deve calcolare:       
+            P_n(x_i) = \sum_{j=0}^{n} y_j * L_j(x_i)    i = 0, ..., m
+    Per farlo costruisco la matrice L delle funzioni base di Lagrange, cosituita da tante 
+    righe quanti sono gli n + 1 coefficienti e, fissata la riga k-esima, ho il polinomio k-esimo
+    valutato in tutti i punti dati. Il risultato sarà dato dal prodotto matriciale tra il vettore
+    contenente gli y_j (ovvero le ordinate dei nodi di interpolazione) e la matrice L:
+        
+                           | L_0(x_0)  L_0(x_1)  ...  L_0(X_m) |   | y_0*L_0(x_0) + y_1*L_1(x_0) + ... + y_n*L_n(x_0) |
+                           | L_1(x_0)  L_1(x_1)  ...  L_1(X_m) |   | y_0*L_0(x_1) + y_1*L_1(x_1) + ... + y_n*L_n(x_1) |
+    [ y_0, y_1, ..., y_n ] |    .          .              .    | = |                                                  |
+                           |    .          .      .       .    |   |                                                  |
+                           |    .          .              .    |   |                                                  |
+                           | L_n(x_0)  L_n(x_1)  ...  L_n(X_m) |   | y_0*L_0(x_m) + y_1*L_1(x_m) + ... + y_n*L_n(x_m) |
+    '''
+    n = nodes.size
+    m = points_values.size
+    L = np.zeros((n, m))
+    for k in range(n):
+        p = plagrange(nodes, k)
+        L[k, :] = np.polyval(p, points_values)
+        
+    return np.dot(nodes_values, L)
     
