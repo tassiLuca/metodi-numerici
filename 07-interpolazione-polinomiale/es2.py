@@ -20,10 +20,10 @@ points_values = np.arange(0, 2 * math.pi + 0.1, math.pi / 40)
 
 sin_intrpl = intrpl.lagrange_interp(nodes, np.sin(nodes), points_values)
 plt.plot(nodes, np.sin(nodes), '*', points_values, sin_intrpl, '--', points_values, np.sin(points_values), '-')
-plt.legend(['Interpolante di Lagrange', 'Punti di interpolazione', 'y = sin(x)'])
+plt.legend(['Punti di interpolazionee', 'Interpolante di lagrange', 'y = sin(x)'])
 plt.show()
 
 cos_intrpl = intrpl.lagrange_interp(nodes, np.cos(nodes), points_values)
 plt.plot(nodes, np.cos(nodes), '*', points_values, cos_intrpl, '--', points_values, np.cos(points_values), '-')
-plt.legend(['Interpolante di Lagrange', 'Punti di interpolazione', 'y = sin(x)'])
+plt.legend(['Punti di interpolazionee', 'Interpolante di lagrange', 'y = cos(x)'])
 plt.show()
