@@ -57,6 +57,7 @@ def plagrange(nodes, j):
     denominator = np.polyval(numerator, nodes[j])
     
     if denominator == 0:
+        print("[ERROR] 'denominator is zero!")
         return 0, 1
     
     p = numerator / denominator
@@ -101,7 +102,6 @@ def lagrange_interp(nodes, nodes_values, points_values):
     for k in range(n):
         p, flag = plagrange(nodes, k)
         if flag == 1:
-            print("Something went wrong!")
             return []
         L[k, :] = np.polyval(p, points_values)
         

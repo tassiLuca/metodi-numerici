@@ -24,7 +24,9 @@ for node in nodes:
     n = node.size
     values = np.linspace(node[0], node[n-1], 200)
     for j in range(n):
-        p = intrpl.plagrange(node, j)
+        p, flag = intrpl.plagrange(node, j)
+        if flag == 1:
+            break
         L = np.polyval(p, values)
         plt.plot(node, np.zeros((n, )), 'o')
         plt.plot(node[j], 1, '*')
