@@ -5,6 +5,7 @@ Interpolazione polinomiale.
 """
 
 import numpy as np
+import math
 
 '''
 N.B.  Si assume qui che le ascisse dei nodi siano tutte diverse (vedi slide 7)
@@ -105,4 +106,25 @@ def lagrange_interp(nodes, nodes_values, points_values):
         L[k, :] = np.polyval(p, points_values)
         
     return np.dot(nodes_values, L)
-    
+
+def chebyshev_nodes(a, b, n):
+    '''
+    Calcola i nodi di Chebyshev.
+
+    Parametri
+    ----------
+    a: estremo sinistro dell'intervallo
+    b: estremo destro dell'intervallo
+    n: numero di nodi
+        
+    Valori di ritorno
+    -------
+    x: vettore con i nodi di Chebyshev.
+
+    '''
+    t1 = (a + b) / 2
+    t2 = (a - b) / 2
+    x = np.zeros((n+1, ))
+    for i in range (n + 1):
+        x[i] = t1 + t2 * np.cos(((2 * i + 1) * math.pi) / (2 * (n + 1)))
+    return x

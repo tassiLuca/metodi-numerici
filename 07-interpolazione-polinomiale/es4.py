@@ -35,28 +35,6 @@ import math
 import matplotlib.pyplot as plt
 import interpolazione as intrpl
 
-def _chebyshev_nodes(a, b, n):
-    '''
-    Calcola i nodi di Chebyshev.
-
-    Parametri
-    ----------
-    a: estremo sinistro dell'intervallo
-    b: estremo destro dell'intervallo
-    n: numero di nodi
-        
-    Valori di ritorno
-    -------
-    x: vettore con i nodi di Chebyshev.
-
-    '''
-    t1 = (a + b) / 2
-    t2 = (a - b) / 2
-    x = np.zeros((n+1, ))
-    for i in range (n + 1):
-        x[i] = t1 + t2 * np.cos(((2 * i + 1) * math.pi) / (2 * (n + 1)))
-    return x
-
 # Seleziono la funzione
 function_choice = input("Scegli funzione: ")
 functions = {
@@ -73,7 +51,7 @@ nodes_choice = input("Scegli tipo punti di interpolazione --> (1) equidistanti; 
 n = int(input("Grado del polinomio: "))
 nodes_types = {
     '1': np.linspace(a, b, n + 1),
-    '2': _chebyshev_nodes(a, b, n)
+    '2': intrpl.chebyshev_nodes(a, b, n)
 }
 nodes = nodes_types.get(nodes_choice)
 nodes_values = function(nodes)
