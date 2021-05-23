@@ -18,6 +18,17 @@ Testare lo script sulle funzioni:
 Calcolare l’errore di interpolazione r(x) = f(x) − p(x), tra la funzione test f(x) e il polinomio di interpolazione 
 p(x). Visualizzare il grafico di f(x) e p(x), ed il grafico di |r(x)|. Cosa si osserva? Cosa accade all’aumentare del
 grado n di p(x)? (Si costruisca una tabella che riporti i valori di ||r(x)||∞ al variare di n).
+
+NOTE: Le prime due funzioni soddisfano le hp. del teorema pg 26: sono di classe C infinito con derivate equilimitate
+      in [a, b]. Ciò garantisce che la successione dei polinomi interpolanti converga ad f uniformemente in [a, b]
+      su una qualunque distribuzione di nodi. Le funzioni successive, invece, non soddisfando le hp. del teorema,
+      mostrano come, se si considerano nodi di interpolazione equispaziati in [a, b], all'aumentare del numero di 
+      punti di interpolazione (e quindi al crescere del grado n del polinomio) si presentano fitte oscillazioni agli
+      estremi dell'intervallo, tipiche dei polinomi di grado elevato. Per ovviare a questo problema si considerano dei
+      nodi distribuiti in modo più fitto vicino agli estremi dell’intervallo: i nodi di Chebyshev (vedi slides 
+      da pg 30).
+      
+      E l'ultima funzione? Slide 36.
 """
 import numpy as np
 import math
