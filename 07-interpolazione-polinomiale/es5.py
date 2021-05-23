@@ -7,9 +7,9 @@ Per n = 5, 10, 15, 20 fornire un’approssimazione della costante di Lebesgue sc
 equispaziati in [−1, 1] oppure coincidenti con i nodi di Chebyshev x_i = cos(((2i + 1)π) / (2(n + 1))) i = 0, ..., n.
 
 NOTA: Dalla definizione di Λ_n (Lebesgue) si vede facilmente che la scelta dei nodi dell’interpolazione x_i, con 
-      i = 0, ..., n è fondamentale per il valore che può assumere la costante di Lebesgue.
-      Anche se in entrambi i casi (nodi di Chebyshev ed equispaziati) per n → +∞ la costante di Lebesgue tende a 
-      infinito, per i nodi di Chebyshev la crescita è logaritmica invece che esponenziale (vd. slide 40).
+      i = 0, ..., n è fondamentale per il valore che può assumere la costante di Lebesgue. Anche se in entrambi i casi 
+      (nodi di Chebyshev ed equispaziati) per n che tende ad infinito la costante di Lebesgue tende a infinito, 
+      per i nodi di Chebyshev la crescita è logaritmica invece che esponenziale (vd. slide 40).
         
       In ogni caso, però, se vengono scelti gradi n troppo elevati, il problema dell’interpolazione polinomiale 
       risulta sensibile alle perturbazioni sui dati. Per interpolare un numero elevato di nodi, al fine di
