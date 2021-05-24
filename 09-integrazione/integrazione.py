@@ -56,3 +56,45 @@ def simpson_comp(fname, a, b, n):
     result = h / 3 * (f[0] + 2 * np.sum(f[2:2*n+2:2]) + 4 * np.sum(f[1:2*n+2:2]) + f[2*n])
     return result
 
+
+# =============================================================================
+# TO REFACTOR 
+# =============================================================================
+
+def trap_toll(fname, a, b, tol):
+    max_steps = 2048
+    err = 1
+    
+    steps = 1
+    integral = trap_comp(fname, a, b, steps)    
+    while steps <= max_steps and err > tol:
+        steps = 2 * steps
+        integral_double_steps = trap_comp(fname, a, b, steps)
+        err = abs(integral - integral_double_steps) / 3
+        integral = integral_double_steps
+    
+    if steps > max_steps:
+        print("Reached max number of sub-intervals")
+        steps = 0
+        integral = []
+        
+    return integral, steps
+    
+def simp_toll(fname, a, b, tol):
+    max_steps = 2048
+    err = 1
+    
+    steps = 1
+    integral = simpson_comp(fname, a, b, steps)    
+    while steps <= max_steps and err > tol:
+        steps = 2 * steps
+        integral_double_steps = trap_comp(fname, a, b, steps)
+        err = abs(integral - integral_double_steps) / 15
+        integral = integral_double_steps
+    
+    if steps > max_steps:
+        print("Reached max number of sub-intervals")
+        steps = 0
+        integral = []
+        
+    return integral, steps
