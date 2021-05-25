@@ -1,0 +1,75 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Esercizio 1 25 giu 
+"""
+import numpy as np
+import numpy.linalg as npl
+
+A = np.array([[10, -4, 4, 0], 
+              [-4, 10, 0, 2], 
+              [4, 0, 10, 2], 
+              [0, 2, 2, 0]], dtype = float)
+
+B = np.array([[5, -2, 2, 0], 
+              [-2, 5, 0, 1], 
+              [2, 0, 5, 1],
+              [0, 1, 1, 5]], dtype = float)
+
+for k in range(A.size):
+    if npl.det(A[0:k+1, 0:k+1]) == 0:
+        print("det della", k, "-esima sottomatrice di testa di A nulla")
+        
+for k in range(B.size):
+    if npl.det(A[0:k+1, 0:k+1]) == 0:
+        print("det della", k, "-esima sottomatrice di testa di B nulla")
+
+"""
+Data una matrice A, se i minori principali di ordine 1, ..., n - 1 delle matrice di A sono diversi da zero
+allora la fattorizzazione LU di A esiste ed è unica. Non è esplicitamente richiesto che det(A) != 0.
+"""
+
+def LU_nopivot(A):
+    m, n = A.shape
+    
+    flag = 0
+    if n != m:
+        print("Matrice non quadrato")
+        L, U, P, flag = [], [], [], 1
+        return P, L, U, flag
+    
+    P = np.eye(n)
+    U = A.copy()
+    
+    for k in range(n - 1):
+        if U[k, k] == 0:
+            print("Elemento diagonale nullo")
+            L, U, P, flag = [], [], [], 1
+            return P, L, U, flag
+        
+        U[k+1:n, k] = U[k+1:n, k] / U[k, k]
+        U[k+1:n, k+1:n] = U[k+1:n, k+1:n] - np.outer(U[k+1:n, k], U[k, k+1:n])
+        
+    L = np.tril(U, -1) + np.eye(n)
+    U = np.triu(U)
+    return P, L, U, flag
+
+P, L, U, flag = LU_nopivot(A)
+
+detA = np.prod(np.diag(U))
+print("Determinante di A = ", detA)
+
+P, L, U, flag = LU_nopivot(B)
+
+detB = np.prod(np.diag(U))
+print("Determinante di B = ", detB)
+
+"""
+Visto che sia A e B ammettono la fattorizzazione LU, il determinante di A, per il teorema di Binèt è possibile
+calcolarlo come det(L) * det(U). Siccome det(L) è triangolare inferiore, con diagonale 1 => det(A) = det(U).
+"""
+
+
+
+
+
