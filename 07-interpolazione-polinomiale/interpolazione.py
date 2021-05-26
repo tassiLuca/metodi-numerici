@@ -86,12 +86,12 @@ def lagrange_interp(nodes, nodes_values, points_values):
     Il risultato sarà dato dal prodotto matriciale tra il vettore contenente gli y_j (ovvero le ordinate dei nodi di 
     interpolazione) e la matrice L:
         
-                           | L_0(x_0)  L_0(x_1)  ...  L_0(X_m) |   | y_0*L_0(x_0) + y_1*L_1(x_0) + ... + y_n*L_n(x_0) |
-                           | L_1(x_0)  L_1(x_1)  ...  L_1(X_m) |   | y_0*L_0(x_1) + y_1*L_1(x_1) + ... + y_n*L_n(x_1) |
+                           | L_0(x_0)  L_0(x_1)  ...  L_0(x_m) |   | y_0*L_0(x_0) + y_1*L_1(x_0) + ... + y_n*L_n(x_0) |
+                           | L_1(x_0)  L_1(x_1)  ...  L_1(x_m) |   | y_0*L_0(x_1) + y_1*L_1(x_1) + ... + y_n*L_n(x_1) |
     [ y_0, y_1, ..., y_n ] |    .          .              .    | = |                                                  |
                            |    .          .      .       .    |   |                                                  |
                            |    .          .              .    |   |                                                  |
-                           | L_n(x_0)  L_n(x_1)  ...  L_n(X_m) |   | y_0*L_0(x_m) + y_1*L_1(x_m) + ... + y_n*L_n(x_m) |
+                           | L_n(x_0)  L_n(x_1)  ...  L_n(x_m) |   | y_0*L_0(x_m) + y_1*L_1(x_m) + ... + y_n*L_n(x_m) |
                            
     Qui: x_i ---> points_value
          y_i ---> nodes_values
@@ -123,7 +123,7 @@ def chebyshev_nodes(a, b, n):
 
     '''
     t1 = (a + b) / 2
-    t2 = (a - b) / 2
+    t2 = (b - a) / 2
     x = np.zeros((n+1, ))
     for i in range (n + 1):
         x[i] = t1 + t2 * np.cos(((2 * i + 1) * math.pi) / (2 * (n + 1)))
