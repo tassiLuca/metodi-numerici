@@ -32,7 +32,6 @@ def _solve_applicability(L, m, n):
     # Test singolarità: è necessario che tutti gli elementi diagonali di L
     # siano NON nulli (visto che il determinante di una matrice triangolare 
     # si calcola come il prodotto degli elementi sulla diagonale).
-    # NON SI DOVREBBE FARE UN CONTROLLO CON EPS?
     if np.all(np.diag(L)) != True:
         print('Errore: Elemento diagonale nullo.') 
         return 1
