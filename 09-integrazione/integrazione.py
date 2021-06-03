@@ -57,11 +57,22 @@ def simpson_comp(fname, a, b, n):
     return result
 
 
-# =============================================================================
-# TO REFACTOR 
-# =============================================================================
-
 def trap_toll(fname, a, b, tol):
+    '''
+    Algoritmo quadratura automatico con Trapezi.
+
+    Parametri
+    ----------
+    fname : funzione di cui calcolare l'integrale definito
+    a : estremo sinistro dell'intervallo di integrazione
+    b : estremo destro dell'intervallo di integrazione
+    tol : tolleranza
+
+    Valori di ritorno
+    -------
+    integral : valore dell'integrale approssimato
+    steps : numero di sottointervalli usati per ridurre l'errore ad essere inferiore di tol
+    '''
     max_steps = 2048
     err = 1
     
@@ -81,6 +92,21 @@ def trap_toll(fname, a, b, tol):
     return integral, steps
     
 def simp_toll(fname, a, b, tol):
+    '''
+    Algoritmo quadratura automatico con Simpson.
+
+    Parametri
+    ----------
+    fname : funzione di cui calcolare l'integrale definito
+    a : estremo sinistro dell'intervallo di integrazione
+    b : estremo destro dell'intervallo di integrazione
+    tol : tolleranza
+
+    Valori di ritorno
+    -------
+    integral : valore dell'integrale approssimato
+    steps : numero di sottointervalli usati per ridurre l'errore ad essere inferiore di tol
+    '''
     max_steps = 2048
     err = 1
     
@@ -88,7 +114,7 @@ def simp_toll(fname, a, b, tol):
     integral = simpson_comp(fname, a, b, steps)    
     while steps <= max_steps and err > tol:
         steps = 2 * steps
-        integral_double_steps = trap_comp(fname, a, b, steps)
+        integral_double_steps = simpson_comp(fname, a, b, steps)
         err = abs(integral - integral_double_steps) / 15
         integral = integral_double_steps
     
