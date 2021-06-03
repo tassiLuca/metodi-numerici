@@ -10,7 +10,7 @@ assumendo tolx = 1.e − 6 e tolf = 1.e − 5. Che cosa si osserva?
 import my_zeri as zeri
 import numpy as np
 import sympy as sym
-import sympy.utilities.lambdify as lambdify
+from sympy.utilities.lambdify import lambdify
 import matplotlib.pyplot as plt
 
 x = sym.symbols('x')
