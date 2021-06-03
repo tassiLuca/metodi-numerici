@@ -28,7 +28,7 @@ b = 1.8
 x = sym.symbols('x')
 functions = {
     '1': sym.sqrt(10 / (x + 4)),        # p = 1, c = 0.127229401770925
-    '2': 1/2*sym.sqrt(10-x**3),         # p = 1, c = 0.511961226874885
+    '2': 1/2 * sym.sqrt(10 - x**3),         # p = 1, c = 0.511961226874885
     '3': (10 + x) / (x**2 + 4 * x + 1), # p = 1, c = 0.983645643784931
     '4': sym.sqrt( 10 / x - 4 * x)      # non converge
 }
@@ -37,8 +37,6 @@ choice = input("Scegli g(x): ")
 gname = functions.get(choice)
 g  = lambdify(x, gname, np)
 dg = lambdify(x, sym.diff(gname, x, 1), np)
-
-
 
 # Calcolo la radice
 root, roots_approximations, it = zeri.iterazione(g, trigger, tolx, max_it)
@@ -69,7 +67,6 @@ plt.show()
 
 # grafico la poligonale in modo tale sia evidente se il metodo converge o meno
 plt.plot(x_axis, x_axis, 'k-', x_axis, g(x_axis))
-plt.title("|g'(α)|="+str(abs(dg(root))))
 Vx = []
 Vy = []
 for k in range(it):
@@ -79,4 +76,5 @@ for k in range(it):
     Vy.append(roots_approximations[k + 1])
 Vy[0] = 0
 plt.plot(Vx, Vy, 'r', roots_approximations, np.zeros_like(roots_approximations), 'o-')
+plt.title("Poligonale")
 plt.show()
