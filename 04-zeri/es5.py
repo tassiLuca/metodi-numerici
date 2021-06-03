@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
+Esercizio 5
+-----------
 Si converta l’equazione x^2 − 5 = 0 nel problema di punto fisso
                             x = x − c(x^2 − 5) ≡ g(x).
 Si scelgano diversi valori di c che assicurino la convergenza di x_{k+1} = x_k − c(x_k^2 − 5)
