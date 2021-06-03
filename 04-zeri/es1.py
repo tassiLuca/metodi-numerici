@@ -2,7 +2,18 @@
 # -*- coding: utf-8 -*-
 """
 Esercizio 1: sperimentazione numerica.
+
+Confrontare i metodi sopra implementati nei casi seguenti:
+• f (x) = exp(−x) − (x + 1) in [−1, 2] con x0 = −0.5, x−1 = −0.3, tolx = 1.e − 12, tolf = 1.e − 12;
+• f (x) = log2 (x + 3) − 2 in [−1, 2] con x0 = −0.5, x−1 = 0.5, tolx = 1.e − 12, tolf = 1.e − 12;
+• f (x) = sqrt(x) − x^2 / 4 in [1, 3] con x0 = 1.8, x−1 = 1.5, tolx = 1.e − 12, tolf = 1.e − 12.
+
+Mostrare in un grafico in scala semilogaritmica sulle ordinate (comando semilogy) l’andamento di 
+ek = |xk − α|, k = 1, ..., n_iterazioni, sapendo che α = 0, 1, 24/3 nei tre casi.
+Calcolare infine, a partire dai valori di {x_k} con k sufficientemente grande, la stima dell’ordine 
+di convergenza p come e si confronti il valore ottenuto con quello atteso.
 """
+
 import my_zeri as roots
 import matplotlib.pyplot as plt
 import sympy as sym
@@ -41,7 +52,7 @@ for function in functions:
     # Grafico la funzione f sull'intervallo [a, b]
     x_axis = np.linspace(a, b, 100)
     plt.subplot(1, 2, 1)
-    plt.title(f_name)
+    plt.title("f(x) = " + str(f_name))
     plt.plot(x_axis, 0 * x_axis, 'black', x_axis, f(x_axis), 'r-')
 
     # Applico i metodi per trovare gli zeri di funzione approssimati
