@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Esercizio 1: sperimentazione numerica.
-
+--------------------------------------
 Confrontare i metodi sopra implementati nei casi seguenti:
 • f (x) = exp(−x) − (x + 1) in [−1, 2] con x0 = −0.5, x−1 = −0.3, tolx = 1.e − 12, tolf = 1.e − 12;
 • f (x) = log2 (x + 3) − 2 in [−1, 2] con x0 = −0.5, x−1 = 0.5, tolx = 1.e − 12, tolf = 1.e − 12;
