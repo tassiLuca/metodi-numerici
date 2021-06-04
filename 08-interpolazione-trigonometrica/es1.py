@@ -3,8 +3,8 @@
 """
 Esercizio 1
 ------------
-Si tratta di una bse di polinomi ortogonali e si dimostra che se i coefficienti di partenza dicui calcoliamo 
-fft sono ad energia finita (cioè la loro somma non va ad infinito), all'umentare dei nodi converge.
+Si tratta di una base di polinomi ortogonali e si dimostra che se i coefficienti di partenza di cui calcoliamo 
+fft sono ad energia finita (cioè la loro somma non va ad infinito), all'aumentare dei nodi converge ad f.
 """
 
 from scipy.fft import fft
