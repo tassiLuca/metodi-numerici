@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-ESAME 26 Giugno 2020 - Esercizio 1
-SISTEMI LINEARI
+ESAME 26 Giugno 2020 - Esercizio 1.
+SISTEMI LINEARI.
 """
 
 import numpy as np
