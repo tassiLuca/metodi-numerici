@@ -53,7 +53,7 @@ def simpson_comp(fname, a, b, n):
     # entro l'intervallo [start, stop) con stop escluso.
     nodes = np.arange(a, b + h, h)
     f = fname(nodes)
-    result = h / 3 * (f[0] + 2 * np.sum(f[2:2*n+2:2]) + 4 * np.sum(f[1:2*n+2:2]) + f[2*n])
+    result = h / 3 * (f[0] + 2 * np.sum(f[2:2*n:2]) + 4 * np.sum(f[1:2*n:2]) + f[2*n])
     return result
 
 
