@@ -23,12 +23,8 @@ f, sx, dx = functions.get(choice)
 
 # Costruisco n + 1 punti equispaziati in [a, b). Si noti b è escluso.
 n = int(input("Introduci il valore di n: "))
-steps = (dx - sx) / (n + 1)
-x = np.arange(sx, dx, steps)
-# Mappo i punti dell'intervallo [a, b) in [l, r) = [0, 2 * pi]
-l = 0
-r = 2 * math.pi
-xm = (x - sx) * (r - l) / (dx - sx) + l
+nodes = np.linspace(sx, dx, n + 1, False)
+ordinates = f(nodes)
 
 if n % 2 == 0:
     m = n // 2
@@ -36,11 +32,11 @@ else:
     m = (n - 1) // 2
 
 # Passo ad fft, la funzione f e lui la interpreta come fosse campionata tra 0 e 2 * pi con passo equidistante.
-y = f(x)
-c = fft(y)
+c = fft(ordinates)
 
-a = np.zeros((m + 2, ))
-b = np.zeros((m + 2, ))
+# Ora dai coefficienti c_i risalgo agli a_k, b_k
+a = np.zeros((m + 2, ), dtype = complex)
+b = np.zeros((m + 2, ), dtype = complex)
 a0 = c[0] / (n + 1)
 a[1:m+1] =  2 * c[1:m+1].real / (n + 1)
 b[1:m+1] = -2 * c[1:m+1].imag / (n + 1)
@@ -54,11 +50,14 @@ else:
     
 pol = a0 * np.ones((100,))
 points = np.linspace(sx, dx, 100)
+l = 0
+r = 2 * math.pi
 points_mapped = (points - sx) * (r - l) / (dx - sx) + l
 
 # quando ricostruiamo il polinomio è necessario che i punti in cui lo andiamo a valutare siano mappati tra 0 e 2 * pi.
 for k in range(1, m + 2):
    pol = pol + a[k] * np.cos(k * points_mapped) + b[k] * np.sin(k * points_mapped)
 
-plt.plot(points, pol, 'r', x , y , 'o', points, f(points), 'b')
+plt.plot(points, pol.real, 'r', nodes, ordinates, 'o', points, f(points), 'b')
+plt.legend(["Polinomio interpolante", "Nodi interpolatori", "f(x)"])
 plt.show()
