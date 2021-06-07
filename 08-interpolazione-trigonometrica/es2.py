@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jun  7 18:01:26 2021
-
-@author: lucatassi
+Esercizio 2
+-----------
+Scrivere uno script che calcoli il polinomio trigonometrico di un opportuno grado m che interpoli un insieme di punti 
+Pi = (xi , yi ), i = 0, ..., n, con xi punti equidistanti in un intervallo [-3,3) e yi , i = 0, ..n definiti 
+yi = 1 se xi < −1 oppure se xi > i altrimenti yi = 0, i = 0, .., n,
+Testare lo script al variare di n e visualizzare il polinomio interpolante parziale via via che si somma il contributo 
+k-esimo a(k)*cos(kx)+b(k)*sin(kx)
 """
 
 import numpy as np
