@@ -16,24 +16,31 @@ fname = x - (1 / 3) * (sym.sqrt(30 * x - 25))
 fpname = sym.diff(fname, x, 1)
 f  = lambdify(x, fname, np)
 df = lambdify(x, fpname, np)
+ddf = lambdify(x, sym.diff(fpname, x, 1), np)
 a = 5 / 6
 b = 25 / 6
 
 '''
 (a) si stabilisca quante radici reali ha f nell’intervallo [a, b] e si giustifichi la risposta
-
+    La funzione f nell'intervallo [a, b] ha uno zero in α = 1.66666667. Come si evince dal grafico di f, 
+    della sua derivata prima e seconda, α è una radice multipla di molteplicità m.
 '''
 root = fsolve(f, 2)
+print("Root (fsolve) = ", root)
 x_axis = np.linspace(a, b)
-#np.seterr(divide = 'ignore') 
-plt.plot(x_axis, 0 * x_axis, 'k', x_axis, f(x_axis), 'orange', x_axis, df(x_axis), 'y', root, f(root), 'r*')
-plt.legend(["y = 0", "f(x) = " + str(fname), "f'(x) = " + str(fpname), "Radice di f(x)"])
+plt.plot(x_axis, 0 * x_axis, 'k', x_axis, f(x_axis), 'orange', x_axis, df(x_axis), 'green', root, f(root), 'r*', 
+         root, ddf(root), 'o')
+plt.legend(["y = 0", "f(x) = " + str(fname), "f'(x) = " + str(fpname), "Radice di f(x)", "f''(α) != 0"])
 plt.title("Grafico funzioni")
 plt.show()
 
 '''
 (b) si costruisca un metodo iterativo che, partendo da x_0 = 4, converga ad α (zero di f), quadraticamente.
 (c) si verifichi numericamente l’ordine di convergenza del metodo implementato al punto b);
+
+    Il metodo di newton cper radici multiple di molteplicità m > 1, la convergenza si riduce a linare. Per ovviare
+    a questo inconveniente si premoltiplica il rapporto f(x_i) / f'(x_i) con m, il valore della molteplcità di α. 
+    Tale metodo prende il nome di Newton modificato.
 '''
 
 def newton_m(fname, fpname, trigger, tolx, toly, max_it, m):
