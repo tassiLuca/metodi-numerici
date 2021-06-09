@@ -28,8 +28,9 @@ b = 25 / 6
 root = fsolve(f, 2)
 print("Root (fsolve) = ", root)
 x_axis = np.linspace(a, b)
-plt.plot(x_axis, 0 * x_axis, 'k', x_axis, f(x_axis), 'orange', x_axis, df(x_axis), 'green', root, f(root), 'r*', 
-         root, ddf(root), 'o')
+plt.plot(x_axis, f(x_axis), 'orange', x_axis, df(x_axis), 'green', root, f(root), 'r*', root, ddf(root), 'o')
+plt.axis([a, b, -1, 1])
+plt.grid(True)
 plt.legend(["y = 0", "f(x) = " + str(fname), "f'(x) = " + str(fpname), "Radice di f(x)", "f''(α) != 0"])
 plt.title("Grafico funzioni")
 plt.show()
@@ -96,6 +97,7 @@ print("Radice di f(x): ", sol, " raggiunto con", it, "iterazioni. Ordine di conv
 '''
 plt.semilogy(range(1, it + 1), xk)
 plt.title("Grafico valori assoluti delle approssimazioni in funzione del numero di iterazioni.")
+plt.grid(True)
 plt.show()
 
 '''
