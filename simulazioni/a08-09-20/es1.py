@@ -6,6 +6,12 @@ Esercizio 1
 ZERI DI FUNZIONE
 """
 
+# =============================================================================
+# You can filter the warnings to raise which will enable you to debug (e.g. using pdb):
+# import warnings
+# warnings.filterwarnings('error')
+# =============================================================================
+
 import numpy as np
 import sympy as sym
 from sympy.utilities import lambdify
@@ -30,7 +36,7 @@ a)  si stabilisca quante radici reali ha f nell’intervallo [1, 3] e si giustif
     si osserva che α è una radice multipla di f di molteplicità 2.
 '''
 root = fsolve(f, 2.5)
-print("Zero della funzione calcolata con fsolve: ", root)
+print("Zero della funzione calcolata con fsolve: ", root[0])
 
 x_axis = np.linspace(a, b)
 plt.plot(x_axis, np.zeros_like(x_axis), 'k', x_axis, f(x_axis), root, df(root), 'o', root, ddf(root), '*')
@@ -55,8 +61,10 @@ def newton_m(fname, dfname, m, trigger, tolx, toly, max_it):
     
     while True:
         it += 1
+        if abs(df_prv) < np.spacing(1):
+            print("Derivata prima di f nulla")
+            return prv, sequence, it - 1
         nxt = prv - m * (f_prv / df_prv)
-        print("--", nxt)
         f_nxt  = fname(nxt)
         df_nxt = dfname(nxt)
         sequence.append(nxt)
@@ -70,9 +78,8 @@ def newton_m(fname, dfname, m, trigger, tolx, toly, max_it):
     
     return nxt, sequence, it
             
-
 my_root, roots_seq, it = newton_m(f, df, m, trigger, tol, tol, max_it)
-print("Zero della funzione determinato con il metodo di Newton Modificato: ", my_root, "raggiunto con", it, "iterazioni")
+print("Metodo di Newton Modificato (con x0 =", trigger, ") --> ", my_root, "raggiunto con", it, "iterazioni")
 
 '''
 c) si verifichi numericamente l’ordine di convergenza del metodo implementato al punto b);
@@ -87,7 +94,6 @@ def stima_ordine(xk, it):
     return p[-1]
 
 print("Ordine di convergenza:", stima_ordine(roots_seq, it))
-
 
 '''
 d) si rappresenti in un grafico in scala semilogaritmica sulle y (comando semilogy eventualmente pre-
@@ -108,7 +114,10 @@ e) si stabilisca se il metodo iterativo proposto al punto b) può convergere ad 
    la condizione di arresto dell'errore relativo risulta essere verificata in quanto 
                                        abs(x_1 - x_0) = 0 < tolx * abs(x_1)
    Il metodo si interrompe pertanto alla prima iterazione, non producendo un'approssimazione accettabile dello zero.
+   
+   NOTA: Il warning che tira su "<lambdifygenerated-2>:2: RuntimeWarning: divide by zero encountered in double_scalars
+   return (1 - 1/sqrt(x - 1))" deriva proprio dal fatto che cerca di calcolare la f'(1) compiendo una divisione per 0!
 '''
 trigger = 1
 my_root, roots_seq, it = newton_m(f, df, m, trigger, tol, tol, max_it)
-print(my_root)
+print("Metodo di Newton Modificato (con x0 =", trigger, ") --> ", my_root, "raggiunto con", it, "iterazioni")
