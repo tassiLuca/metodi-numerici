@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
+Esercizio 3
+-----------
+
 Si noti come, a fronte di una piccola perturbazione dei dati dello 0,12%, l'errore sul risultato risulta essere
-oltre l'81%. Questo determina che il primo sistema lineare è MAL condizionato. Al contrario il secondo sistema 
+oltre l'81%. Questo determina che il primo sistema lineare sia MAL condizionato. Al contrario il secondo sistema 
 lineare è ben condizionato, perché a piccole perturbazioni (relative) nei dati corrispondono perturbazioni 
 (relative) sul risultato dello stesso ordine di grandezza (0,66% sui dati e 1.3% sui risultati => stesso ordine di
 grandezza).
