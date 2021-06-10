@@ -11,7 +11,7 @@ import scipy.linalg as spl
 import matplotlib.pyplot as plt
 
 '''
-(a) Scrivere la function Usolve che implementa il metodo delle sostituzioni all’indietro per risolvere 
+a)  Scrivere la function Usolve che implementa il metodo delle sostituzioni all’indietro per risolvere 
     un sistema lineare con matrice dei coefficienti triangolare superiore.
 '''
 def Usolve(U, b):
@@ -31,7 +31,7 @@ def Usolve(U, b):
     return x, 0
 
 '''
-(b) Scrivere la function metodoQR che, presi in input due vettori contenenti rispettivamente le ascisse
+b)  Scrivere la function metodoQR che, presi in input due vettori contenenti rispettivamente le ascisse
     e le ordinate dei punti da approssimare ai minimi quadrati, determini i coefficienti del polinomio di 
     approssimazione di grado n risolvendo un opportuno sistema lineare tramite chiamata della function Usolve.
 '''
@@ -50,6 +50,9 @@ c)  Si utilizzi la function metodoQR per determinare i polinomi di approssimazio
 d)  Quale tra le tre approssimazioni ottenute al punto precedente risulta migliore? Confrontare gli errori
                                 E_j = \sum_{i = 1}^{12} (f_j(x_i) - y_i)^2, j = 1, 2, 3
     dove f_1, f_2 e f_3 denotano i polinomi di approssimazione di grado 1, 2 e 3 determinati al punto c).
+    
+    L'errore è minimo per il polinomio di approssimazione di grado 3, il quale si discosta di pochissimo dal 
+    polinomio di grado 2.
 '''
 
 start = 1900
@@ -61,23 +64,28 @@ y = np.array([76, 92, 106, 123, 132, 151, 179, 203, 226, 249, 281, 305])
 val_points = np.linspace(start, stop, 100)
 
 err = []
+legend = []
+
+# grafico i punti di valutazione
+plt.plot(x, y, 'ko')
+legend.append("Punti di valutazione")
 
 for n in range(1, 4):
+    # calcolo il polinomio di approssimazione
     pol = metodoQR(x, y, n)
     ordinates = np.polyval(pol, val_points)
     
-    # calcolo l'errore
+    # calcolo l'errore e lo stampo
     err.append(np.sum((y - np.polyval(pol, x)) ** 2))
     # equivalentemente: np.linalg.norm(y - np.polyval(pol, x))**2
     print("Errore polinomio di approssimazione di grado", n, " = ", err[-1])
-    
-    np.linalg.norm()
-    
+        
     # grafico il polinomio
-    plt.plot(x, y, 'o', val_points, ordinates)
-    plt.legend(["Punti di valutazione", "polinomio di approssimazione"])
+    plt.plot(val_points, ordinates)
+    legend.append("Polinomio grado " + str(n))
     plt.xlabel("x")
     plt.ylabel("y")
-    plt.title("n = " + str(n))
-    plt.show()
+
+plt.legend(legend)
+plt.show()
     
