@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-APPELLO DELL'8-10-20
-ESERCIZIO 2
+APPELLO DELL'8-10-20 - ESERCIZIO 2
+----------------------------------
 INTERPOLAZIONE
 """
 
@@ -50,8 +50,8 @@ points = np.linspace(a, b, 200)
 
 equi_lebesgue = np.zeros(6)
 cheb_lebesgue = np.zeros(6)
-equi_lebsgue_acc = np.zeros(200)
-cheb_lebsgue_acc = np.zeros(200)
+equi_lebesgue_acc = np.zeros(200)
+cheb_lebesgue_acc = np.zeros(200)
 
 fig = 1
 i = 0
@@ -65,7 +65,7 @@ for n in range(5, 31, 5):
     # calcolo lebesgue
     for k in range(n + 1):
         pol = pol_lagrange(equi_nodes, k)
-        equi_lebsgue_acc = equi_lebsgue_acc + np.abs(np.polyval(pol, points))
+        equi_lebsgue_acc = equi_lebesgue_acc + np.abs(np.polyval(pol, points))
     equi_lebesgue[i] = np.max(equi_lebsgue_acc)    
     
     plt.subplots_adjust(hspace = 0.7, wspace = 0.3)
@@ -89,8 +89,8 @@ for n in range(5, 31, 5):
     # calcolo lebesgue
     for k in range(n + 1):
         pol = pol_lagrange(cheb_nodes, k)
-        cheb_lebsgue_acc = cheb_lebsgue_acc + np.abs(np.polyval(pol, points))
-    cheb_lebesgue[i] = np.max(cheb_lebsgue_acc)    
+        cheb_lebsgue_acc = cheb_lebesgue_acc + np.abs(np.polyval(pol, points))
+    cheb_lebesgue[i] = np.max(cheb_lebsgue_acc)
     
     plt.subplots_adjust(hspace = 0.7, wspace = 0.3)
     plt.subplot(3, 2, fig)

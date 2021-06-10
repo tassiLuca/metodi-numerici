@@ -6,11 +6,11 @@ Esercizio 1
 ZERI DI FUNZIONE
 """
 
-# =============================================================================
+# ======================================================================================
 # You can filter the warnings to raise which will enable you to debug (e.g. using pdb):
 # import warnings
 # warnings.filterwarnings('error')
-# =============================================================================
+# ======================================================================================
 
 import numpy as np
 import sympy as sym
