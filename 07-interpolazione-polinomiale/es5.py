@@ -34,11 +34,13 @@ points_values = np.linspace(a, b, 200)
 # la dimnesione è calcolata con (stop - start) / step in quanto bisogna allocare un array costituito 
 # da tanti quante sono i nodi.
 dim = int((stop - start) / step) 
-equi_lebesgue = np.zeros((4, 1))
-cheby_lebesgue = np.zeros((4, 1))
+length = int((stop - start) / step + 1)
+print(length)
+equi_lebesgue = np.zeros((length, 1))
+cheby_lebesgue = np.zeros((length, 1))
 
 j = 0
-for n in range(start, stop, step):
+for n in range(start, stop + step, step):
     equi_nodes = np.linspace(a, b, n + 1)
     cheby_nodes = intrpl.chebyshev_nodes(a, b, n)
     
@@ -47,7 +49,7 @@ for n in range(start, stop, step):
     for i in range(n + 1):
         equi_pol, flag = intrpl.plagrange(equi_nodes, i)
         # Accumulo i valori assoluti di tutti gli n + 1 polinomi di Lagrange sui nodi equispaziati
-        equi_lebesgue_acc = cheby_lebesgue_acc + np.abs(np.polyval(equi_pol, points_values))
+        equi_lebesgue_acc = equi_lebesgue_acc + np.abs(np.polyval(equi_pol, points_values))
         
         cheby_pol, flag = intrpl.plagrange(cheby_nodes, i)
         # Accumulo i valori assoluti di tutti gli n + 1 polinomi di Lagrange sui nodi di Chebyshev
@@ -58,9 +60,9 @@ for n in range(start, stop, step):
     j = j + 1
   
 print("Costante di Lebesgue con nodi equispaziati al variare di n: \n", equi_lebesgue)
-plt.plot(range(start, stop, step), equi_lebesgue, '*-')
+plt.plot(range(start, stop + step, step), equi_lebesgue, '*-')
 print("Costante di Lebesgue con nodi di Chebyshev al variare di n: \n", cheby_lebesgue)
-plt.plot(range(start, stop, step), cheby_lebesgue, '*-')
+plt.plot(range(start, stop + step, step), cheby_lebesgue, '*-')
 plt.legend(['Nodi equispaziati', 'Nodi di Chebyshev'])
 plt.title("Costante di Lebesgue")
 plt.show()
