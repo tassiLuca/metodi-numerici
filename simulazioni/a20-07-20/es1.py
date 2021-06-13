@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Sun Jun 13 21:10:36 2021
-
-@author: lucatassi
+Appello 20 Luglio 2020 - Esercizio 1
+------------------------------------
+APPROSSIMAZIONE MINIMI QUADRATI E INTEGRAZIONE NUMERICA
 """
 
 import numpy as np
