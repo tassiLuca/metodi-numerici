@@ -45,7 +45,7 @@ if n % 2 == 0:
     a[m + 1] = 0
     b[m + 1] = 0
 else:
-    #a[m + 1] = coeff(m + 1) / (n + 1)
+    a[m + 1] = coeff[m + 1] / (n + 1)
     b[m + 1] = 0
 
 pol = a0 * np.ones((100,))
