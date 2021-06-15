@@ -71,9 +71,14 @@ start, stop, step = 5, 30, 5
 points = np.linspace(a, b, 100)
 
 size = int((stop + step - start) / step)
+equi_err = np.zeros((size, ))
 equi_lebesgue = np.zeros((size, ))
+cheb_err = np.zeros((size, ))
 cheb_lebesgue = np.zeros((size, ))
 
+# =============================================================================
+# NODI EQUISPAZIATI
+# =============================================================================
 i = 1
 for n in range(start, stop + step, step):
     # calcolo polinomio interpolante su nodi equispaziati
@@ -81,7 +86,7 @@ for n in range(start, stop + step, step):
     equi_ordinates = fname(equi_nodes)
     equi_pol = lagrange_intrpl(equi_nodes, equi_ordinates, points)
     # calcolo errore 
-    equi_err = np.abs(fname(points) - equi_pol)
+    equi_err[i - 1] = np.abs(fname(points) - equi_pol)
     # calcolo costante di lebesgue
     equi_lebesgue[i - 1] = lebesgue(equi_nodes, points)
     
@@ -91,10 +96,11 @@ for n in range(start, stop + step, step):
     plt.plot(points, equi_err)
     plt.legend(["n =" + str(n)])
     i += 1
-    
 plt.show()
 
-
+# =============================================================================
+# NODI DI CHEBYSHEV
+# =============================================================================
 i = 1
 for n in range(start, stop + step, step):
     # calcolo polinomio interpolante su nodi di chebyshev
@@ -112,7 +118,6 @@ for n in range(start, stop + step, step):
     plt.plot(points, cheb_err)
     plt.legend(["n =" + str(n)])
     i += 1
-
 plt.show()
 
 # grafico le costanti di Lebesgue
