@@ -63,8 +63,8 @@ d)  Si stimi il numero N di sottointervalli equispaziati che servono per appross
     I1 = 2.114381916835873 e I2 = 2.168048769926493) nel rispetto della tolleranza
     10−5. Quanto vale N nei due casi? Quanto valgono gli errori assoluti? Motivare i risultati ottenuti.
 
-    Il fatto che la formula di simpson per calcolare l'integrale del polinomio approssimante di grado 2
-    raggiunga il risultato in soli 2 passi commettendo un errore (assoluto) pari a 1.3e-14, dipende dal fatto che 
+    Il fatto che la formula di Simpson per calcolare l'integrale del polinomio approssimante di grado 2
+    raggiunga il risultato in soli 2 passi commettendo un errore (assoluto) pari a circa 1.3e-14, dipende dal fatto che 
     l'errore della formula di NC composita con n = 2 (=> s = 4) dipende dalla derivata quarta della funzione integranda. 
     Nella fattispecie, essendo la funzione integranda il polinomio di grado 4, la sua derivata quarta si annulla, 
     di fatto rendendo zero l'errore sin dalla prima suddivisione in 2 passi.
