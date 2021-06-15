@@ -70,7 +70,7 @@ def lagrange_interp(nodes, nodes_values, points_values):
 
     Parametri
     ----------
-    nodes         : vettore con i nodi dell'interpolazione
+    nodes         : vettore con gli n + 1 nodi interpolatori
     nodes_values  : vettore con i valori dei nodi
     points_values : vettore con i punti in cui si vuole valutare il polinomio
 
