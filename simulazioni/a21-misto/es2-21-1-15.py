@@ -118,7 +118,7 @@ e) Relativamente alla risoluzione del sistema lineare con matrice A2, il procedi
    d) ha qualche vantaggio? Motivare la risposta.
     
    Conviene utilizzare la strategia proposta per la soluzione del secondo sistema e NON calcolare la fattorizzazione
-   LU di A**2, perchè A è mal condizionata e il sistema lineare con matriceA**2 ha un indice di condizionamento 
+   LU di A**2, perchè A è mal condizionata e il sistema lineare con matrice A**2 ha un indice di condizionamento 
    pari al quadrato di A (vd. note p.to (a)), pertanto è opportuno risolvere i 4 sistemi lineari con matrici 
    triangolare che hanno sicuramente un indice di condizionamento molto inferiore di A**2.
 '''
@@ -133,8 +133,6 @@ def LU_solve(L, U, b):
 def LULU_solve(L, U, c):
     '''
     Risoluzione in "cascata" di L U L U x = c
-    
-
     '''
     y1, flag = forward(L, c)
     y2, flag = backward(U, y1)
