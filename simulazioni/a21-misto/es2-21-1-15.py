@@ -28,7 +28,7 @@ def LU_nopivot(A):
             return [], [], 1
         
         U[k+1:n, k] = U[k+1:n, k] / U[k, k]
-        U[k+1:n, k+1:n] = U[k+1:n, k+1:n] - np.dot(U[k+1:n, k], U[k, k+1:n])
+        U[k+1:n, k+1:n] = U[k+1:n, k+1:n] - np.outer(U[k+1:n, k], U[k, k+1:n])
         
     L = np.tril(U, -1) + np.eye(n)
     U = np.triu(U)
@@ -48,8 +48,8 @@ def backward(A, b):
         print("ERRORE: det(A) = 0")
         return [], 1
     
-    x = np.zeros(n)
-    for i in range(n):
+    x = np.zeros((n, 1))
+    for i in range(n - 1, -1, -1):
         s = np.dot(A[i, i+1:n], x[i+1:n])
         x[i] = (b[i] - s) / A[i, i]
         
@@ -69,7 +69,7 @@ def forward(A, b):
         print("ERRORE: det(A) = 0")
         return [], 1
     
-    x = np.zeros(n)
+    x = np.zeros((n, 1))
     for i in range(n):
         s = np.dot(A[i, :i], x[:i])
         x[i] = (b[i] - s) / A[i, i]
