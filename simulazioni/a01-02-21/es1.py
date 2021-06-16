@@ -55,10 +55,8 @@ d)  Quale tra le tre approssimazioni ottenute al punto precedente risulta miglio
     polinomio di grado 2.
 '''
 
-start = 1900
-stop = 2010
-step = 12
-x = np.linspace(start, stop, 12, False)
+start, stop, step = 1900, 2010, 10
+x = np.arange(start, stop + step, step, dtype = float)
 y = np.array([76, 92, 106, 123, 132, 151, 179, 203, 226, 249, 281, 305])
 
 val_points = np.linspace(start, stop, 100)
