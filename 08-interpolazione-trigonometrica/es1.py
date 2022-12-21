@@ -37,6 +37,9 @@ c = fft(ordinates)
 # Ora dai coefficienti c_i risalgo agli a_k, b_k
 a = np.zeros((m + 2, ), dtype = complex)
 b = np.zeros((m + 2, ), dtype = complex)
+# Serve per rendere il problema ben posto e la scelta per il coefficiente 
+# a[m+1] è: a[m+1]=c[m+1]/(n+1) (la divisione per n+1 derivata dal fatto che 
+# la funzione fft di python non divide per il numero dei campioni come nella formula teorica).
 a0 = c[0] / (n + 1)
 a[1:m+1] =  2 * c[1:m+1].real / (n + 1)
 b[1:m+1] = -2 * c[1:m+1].imag / (n + 1)
